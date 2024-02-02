@@ -2,7 +2,6 @@
 layout: page
 title: login
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,6 +19,10 @@ title: login
         }
         .input-container {
             margin-top: 10px;
+        }
+        .message-input{
+            width: 1000px
+            height: 100px
         }
     </style>
 </head>
