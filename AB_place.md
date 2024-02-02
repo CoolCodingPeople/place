@@ -12,15 +12,13 @@ title: login
         body {
             font-family: Arial, sans-serif;
         }
-
-        #messages {
+        .messages {
             border: 1px solid #ccc;
             padding: 10px;
             max-height: 300px;
             overflow-y: scroll;
         }
-
-        #input-container {
+        .input-container {
             margin-top: 10px;
         }
     </style>
@@ -31,25 +29,20 @@ title: login
         <input type="text" id="messageInput" placeholder="Type your message...">
         <button onclick="sendMessage()">Send</button>
     </div>
-
     <script>
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
             const message = messageInput.value.trim();
-
             if (message !== '') {
                 appendMessage('You', message);
                 messageInput.value = '';
             }
         }
-
         function appendMessage(sender, text) {
             const messagesContainer = document.getElementById('messages');
             const messageElement = document.createElement('div');
             messageElement.innerHTML = `<strong>${sender}:</strong> ${text}`;
             messagesContainer.appendChild(messageElement);
-
-            // Scroll to the bottom to show the latest message
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     </script>
