@@ -1,4 +1,5 @@
 ---
 layout: page
-title: login
+title: Log-in / Sign-up
 ---
+<!--This feature Belongs to: Akshat -->
