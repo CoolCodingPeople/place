@@ -1,3 +1,7 @@
+---
+layout: page
+title: Settings
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>

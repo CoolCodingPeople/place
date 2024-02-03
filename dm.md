@@ -1,3 +1,7 @@
+---
+layout: page
+title: Direct Messaging
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
