@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Server
+title: Servers
 ---
 
 <!--This feature Belongs to: Orlando-->
