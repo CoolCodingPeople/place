@@ -15,7 +15,7 @@ title: image
     <div id="upload button">
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <input type="file" name="file">
-            <button type="submit" name="submit">Upload</button>
+            <button type="submit" name="submit">Send</button>
         </form>
     </div>
 </body>
