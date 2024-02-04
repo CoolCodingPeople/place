@@ -1,11 +1,11 @@
 ---
-layout: default
+layout: post
 title: Settings
 ---
 
 <!--This feature Belongs to: Mati -->
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
