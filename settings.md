@@ -31,11 +31,25 @@ title: Settings
             document.body.style.backgroundColor = color;
             localStorage.setItem('backgroundColor', color);
         }
+
         // Check if there is a stored background color
         const storedColor = localStorage.getItem('backgroundColor');
         if (storedColor) {
             document.body.style.backgroundColor = storedColor;
         }
+
+        // Array of colors to cycle through
+        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+        let currentIndex = 0;
+
+        // Function to change the background color every 0.1 seconds
+        function autoChangeBackgroundColor() {
+            changeBackgroundColor(colors[currentIndex]);
+            currentIndex = (currentIndex + 1) % colors.length;
+        }
+
+        // Call the function every 0.1 seconds
+        setInterval(autoChangeBackgroundColor, 100);
     </script>
 </body>
 </html>
