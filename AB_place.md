@@ -2,10 +2,6 @@
 layout: default
 title: Servers
 ---
-
-<!--This feature Belongs to: Orlando-->
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -144,7 +140,7 @@ title: Servers
       const list = ["#FF5733", "#FFC300", "#5DBB63", "#6B66B5", "#4183D7"];
       const randomIndex = Math.floor(Math.random() * list.length);
       return list[randomIndex];
-    } (edited) 
+    }  
     </script>
 </body>
 </html>
