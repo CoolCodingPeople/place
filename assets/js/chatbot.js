@@ -1,6 +1,8 @@
 const msgerForm = get(".msger-inputarea");
 const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
+const waitingSpinner = getById("waiting");
+
 const url = "http://192.168.68.99:11434/api/generate";
 
 const BOT_MSGS = [
@@ -25,7 +27,8 @@ msgerForm.addEventListener("submit", event => {
 
   appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
   msgerInput.value = "";
-
+  
+waitingSpinner.style.display="";
   botResponse(msgText);
 });
 
@@ -60,7 +63,9 @@ function botResponse(msgText) {
 		
 		for (var i = 0; i < lines.length; i++) {
 			const jsonLine =JSON.parse(lines[i]);
-			chatReponse += jsonLine.response;
+			let responseLine = jsonLine.response;
+			responseLine = responseLine.replace(/(?:\r\n|\r|\n)/g, '<br>');;
+			chatReponse += responseLine;
 			chatDone = jsonLine.done;
 			
 			if (chatDone)
@@ -69,6 +74,7 @@ function botResponse(msgText) {
 		
 		console.log(chatReponse);
 		appendMessage(BOT_NAME, BOT_IMG, "left", chatReponse);
+		waitingSpinner.style.display="none";
 	});
   
 }
@@ -76,6 +82,10 @@ function botResponse(msgText) {
 // Utils
 function get(selector, root = document) {
   return root.querySelector(selector);
+}
+
+function getById(eleid, root = document) {
+  return root.getElementById(eleid);
 }
 
 function formatDate(date) {

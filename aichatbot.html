@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
  <link rel="stylesheet" href="assets/css/chatbot.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  <meta charset="utf-8">
 </head>
 <body>
@@ -10,8 +11,8 @@
     <div class="msger-header-title">
       <i class="fas fa-comment-alt"></i> SimpleChat
     </div>
-    <div class="msger-header-options">
-      <span><i class="fas fa-cog"></i></span>
+    <div id="waiting" class="msger-header-options" style="display:none">
+      <span>Waiting for response...<i class="fa fa-cog fa-spin"></i></span>
     </div>
   </header>
 
@@ -32,25 +33,6 @@
           Hi, welcome to AI Chat Bot! Go ahead and send me a message. 😄
         </div>
       </div>
-    </div>
-
-    <div class="msg right-msg">
-<!--      <div
-       class="msg-img"
-       style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-      ></div>
- 
-      <div class="msg-bubble">
-        <div class="msg-info">
-          <div class="msg-info-name">Shivansh</div>
-          <div class="msg-info-time">12:46</div>
-        </div>
-
-        <div class="msg-text">
-          Test MSG.
-        </div>
-      </div>
- -->
     </div>
   </main>
 
