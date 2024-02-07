@@ -1,6 +1,7 @@
 const msgerForm = get(".msger-inputarea");
 const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
+const url = "http://192.168.68.99:11434/api/generate";
 
 const BOT_MSGS = [
   "Hi, how are you?",
@@ -14,7 +15,7 @@ const BOT_MSGS = [
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
 const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
 const BOT_NAME = "BOT";
-const PERSON_NAME = "Sajad";
+const PERSON_NAME = "Shivansh";
 
 msgerForm.addEventListener("submit", event => {
   event.preventDefault();
@@ -25,7 +26,7 @@ msgerForm.addEventListener("submit", event => {
   appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
   msgerInput.value = "";
 
-  botResponse();
+  botResponse(msgText);
 });
 
 function appendMessage(name, img, side, text) {
@@ -49,14 +50,27 @@ function appendMessage(name, img, side, text) {
   msgerChat.scrollTop += 500;
 }
 
-function botResponse() {
-  const r = random(0, BOT_MSGS.length - 1);
-  const msgText = BOT_MSGS[r];
-  const delay = msgText.split(" ").length * 100;
-
-  setTimeout(() => {
-    appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-  }, delay);
+function botResponse(msgText) {
+	const prompt = msgText;
+	postData(url, {  "model": "llama2",  prompt}).then((data) => {
+		//console.log(data);
+		const lines = data.split('\n');
+		var chatReponse = "";
+		var chatDone = false;
+		
+		for (var i = 0; i < lines.length; i++) {
+			const jsonLine =JSON.parse(lines[i]);
+			chatReponse += jsonLine.response;
+			chatDone = jsonLine.done;
+			
+			if (chatDone)
+				break;
+		}
+		
+		console.log(chatReponse);
+		appendMessage(BOT_NAME, BOT_IMG, "left", chatReponse);
+	});
+  
 }
 
 // Utils
@@ -74,3 +88,31 @@ function formatDate(date) {
 function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
+
+async function postData(url = "", data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  }).then(function(response) {
+    // The response is a Response instance.
+    // You parse the data into a useable format using `.json()`
+    return response.text();
+  }).then(function(data) {
+    // `data` is the parsed version of the JSON returned from the above endpoint.
+    return data ;
+  });
+  
+  return response; // parses JSON response into native JavaScript objects
+}
+
+
