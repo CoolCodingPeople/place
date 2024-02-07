@@ -5,10 +5,10 @@ github_username: CoolCodingPeople
 github_repo: "place"
 baseurl: "/place"
 remote_theme: jekyll/minima
-minima:
-  social_links:
-    - { platform: github, user_url: "https://github.com/nighthawkcoders"}
-    - { platform: github, user_url: "https://github.com/hsinaditam"}
+#minima:
+#  social_links:
+#    - { platform: github, user_url: "https://github.com/nighthawkcoders"}
+#   - { platform: github, user_url: "https://github.com/hsinaditam"}
 # remote_theme: pages-themes/dinky@v0.2.0
 # remote_theme: pages-themes/minimal@v0.2.0
 # remote_theme: pages-themes/hacker@v0.2.0

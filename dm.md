@@ -1,3 +1,10 @@
+---
+layout: default
+title: Direct Messaging
+---
+
+<!--This feature Belongs to: Shreyas -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
