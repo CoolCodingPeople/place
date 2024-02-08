@@ -73,16 +73,29 @@ title: Direct Messaging
             var messageInput = document.getElementById("messageInput");
             var message = messageInput.value;
             if (message.trim() !== "") {
-                var chatWindow = document.getElementById("chat-window");
-                var newMessage = document.createElement("div");
-                newMessage.className = "message";
-                newMessage.textContent = message;
-                newMessage.classList.add(chatWindow.children.length % 2 === 0 ? "user1" : "user2");
-                chatWindow.appendChild(newMessage);
-                messageInput.value = "";
-                chatWindow.scrollTop = chatWindow.scrollHeight;
+                fetch('http://localhost:8080/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user: 'User1', text: message }), 
+                })
+                .then(response => response.json())
+                .then(data => {
+                    displayMessage(data);
+                    messageInput.value = "";
+                })
+                .catch(error => console.error('Error:', error));
             }
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:8080/messages')
+                .then(response => response.json())
+                .then(messages => {
+                    messages.forEach(message => displayMessage(message));
+                })
+                .catch(error => console.error('Error:', error));
+        });
         document.getElementById("messageInput").addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
                 sendMessage();
