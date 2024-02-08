@@ -3,15 +3,8 @@ const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
 const waitingSpinner = getById("waiting");
 
-const url = "http://192.168.68.99:11434/api/generate";
-
-const BOT_MSGS = [
-  "Hi, how are you?",
-  "Ohh... I can't understand what you trying to say. Sorry!",
-  "I like to play games... But I don't know how to play!",
-  "Sorry if my answers are not relevant. :))",
-  "I feel sleepy! :("
-];
+//const url = "http://192.168.68.99:11434/api/generate";
+const url = "http://localhost:8765/aichatbot/chat?message=";
 
 // Icons made by Freepik from www.flaticon.com
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
@@ -54,10 +47,11 @@ function appendMessage(name, img, side, text) {
 }
 
 function botResponse(msgText) {
-	const prompt = msgText;
-	postData(url, {  "model": "llama2",  prompt}).then((data) => {
-		//console.log(data);
-		const lines = data.split('\n');
+	let reqUrl = url + msgText;
+	//postData(url, {  "model": "llama2",  prompt}).then((data) => {
+	getData(reqUrl).then((data) => {	
+		console.log(data);
+		/*const lines = data.split('\n');
 		var chatReponse = "";
 		var chatDone = false;
 		
@@ -73,7 +67,8 @@ function botResponse(msgText) {
 		}
 		
 		console.log(chatReponse);
-		appendMessage(BOT_NAME, BOT_IMG, "left", chatReponse);
+		*/
+		appendMessage(BOT_NAME, BOT_IMG, "left", data);
 		waitingSpinner.style.display="none";
 	});
   
@@ -113,6 +108,31 @@ async function postData(url = "", data = {}) {
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(data), // body data type must match "Content-Type" header
+  }).then(function(response) {
+    // The response is a Response instance.
+    // You parse the data into a useable format using `.json()`
+    return response.text();
+  }).then(function(data) {
+    // `data` is the parsed version of the JSON returned from the above endpoint.
+    return data ;
+  });
+  
+  return response; // parses JSON response into native JavaScript objects
+}
+
+async function getData(url = "") {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   }).then(function(response) {
     // The response is a Response instance.
     // You parse the data into a useable format using `.json()`
