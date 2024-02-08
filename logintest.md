@@ -1,74 +1,204 @@
 ---
-layout: default
-title: login
-permalink: /logins
+title: Account Login
+layout: Default
+permalink: /acclogin
 ---
-
-<!-- <div class="page-header" style="padding: 350px height: 20%; border-radius: 50px;">
-<h1 style="color: black;" id="L">Login</h1><br>
-<input type="text" placeholder="Username" id = "username" style="color: black; padding: 10px;"><br>
-<input type="password" placeholder="Password" id = "password" style="color: black; padding: 10px;"><br>
-<p></p>
-<p id="message"></p>
-<button style="padding: 5px; color: black; flex: 50%" onclick="login()">Login</button>
-<button style="padding: 5px; color: black; flex: 50%" onclick="location.href='https://jakewarren2414.github.io/dolphins2/signup'">Signup</button>
-<button style="padding: 5px; color: black; flex: 50%" onclick="location.href='https://jakewarren2414.github.io/dolphins2/#Title'">Next</button>
-</div> -->
-<div class="shadow">
-<div id="logininfo"></div>
-</div>
-<script>
-    function loginPage() {
-        username = sessionStorage.getItem("uid");
-        const newRow = document.getElementById('logininfo');
-        var space = document.getElementById("spacing");
-        var head = document.getElementById("loginHead");
-        if (username == null) {
-            newRow.innerHTML = `
-                <h1 style="color: black;" id="L">Login</h1><br>
-                <input type="text" placeholder="Username" id = "username" style="color: black; padding: 10px;"><br>
-                <input type="password" placeholder="Password" id = "password" style="color: black; padding: 10px;"><br>
-                <p></p>
-                <p id="message"></p>
-                <button style="padding: 5px; color: black; flex: 50%" onclick="login()">Login</button>
-                <button style="padding: 5px; color: black; flex: 50%" onclick="location.href='https://coolcodingpeople.github.io/place/signup'">Signup</button>
-            `;
-        }
-        else {
-            document.getElementById("spacing").style.padding="50px";
-            head = head.style.display = "block";
-            newRow.innerHTML = `
-            <div>Hello ${username} welcome back</div>
-            `;
-        }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Login</title>
+<style>
+    /* Use a gradient background for the body */
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #74ebd5, #acb6e5);
+        margin: 0;
+        display: flex;
+        justify-content: center;
     }
-    loginPage();
-    var sessionData = "uid"
-function login() {
-    const login_url = "https://ccplace.duckdns.org/api/person/";
-    const password = document.getElementById("password").value;
-    const username = document.getElementById("username").value;
-    fetch(login_url)
-        .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                var i = 0;
-                while (true) {
-                    if (i >= data.length) {
-                        alert("username or password is incorrect");
-                        break;
+    /* Use a white container with rounded corners and a drop shadow for the login form */
+    .container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        text-align: center;
+    }
+    /* Use a large and bold font for the title */
+    .post-title {
+        font-size: 3em;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+    }
+    /* Use a smaller font for the subtitle */
+    .subtitle {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+    /* Use a light blue button with a hover effect for the sign up button */
+    #signUpButton {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #7ed6df;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #signUpButton:hover {
+        background-color: #22a6b3;
+    }
+    /* Use a flexbox layout for the login form */
+    #logind {
+        display: flex;
+        justify-content: center;
+        width: 60%;
+        margin-left: 20%;
+    }
+    /* Use a dark mode and a light mode for the input fields and buttons */
+    .normal, .lightmode {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin: 5px;
+    }
+    .normal input, .normal button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .normal {
+        background-color: #121212;
+        color: white;
+    }
+    .normal input {
+        border: 1px solid white;
+    }
+    .normal button {
+        background-color: #121212;
+        color: white;
+        cursor: pointer;
+    }
+    .normal button:hover {
+        background-color: #333;
+    }
+    .lightmode {
+        background-color: #F6FFF5;
+        color: black;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen">
+            <form action="javascript:login_user()">
+                <p id="email" class="normal">
+                    <label>Email:
+                        <input class="normal" type="text" name="uid" id="uid" required>
+                    </label>
+                </p>
+                <p id="passwordd" class="normal">
+                    <label>Password:
+                        <input class="normal" type="password" name="password" id="password" required>
+                    </label>
+                </p>
+                <p id="logind" class="normal">
+                    <button>Login</button>
+                </p>
+            </form>
+        </div>
+        <!-- Account Details Screen (Initially Hidden) -->
+        <div id="accountDetails" style="display: none;">
+            <!-- Account details will go here -->
+            <p>Welcome to your account!</p>
+        </div>
+    </div>
+    <button id="signUpButton" class="button" onclick="signUpSwitch()">Sign Up</button>
+</body>
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the user is logged in (You need to define your own logic for this)
+            if (localStorage.getItem("loggedIn") === "true") {
+                showAccountDetails();
+            } else {
+                showLoginScreen();
+            }
+        });
+        function showAccountDetails() {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("signUpButton").style.display = "none";
+            document.getElementById("accountDetails").style.display = "block";
+            // Create and append the email and stock elements
+            const emailDiv = document.createElement("div");
+            emailDiv.innerHTML = "Email: " + localStorage.getItem("localEmail");
+            document.getElementById("accountDetails").appendChild(emailDiv);
+            const stockDiv = document.createElement("div");
+            document.getElementById("accountDetails").appendChild(stockDiv);
+            // Create a button element
+            const button = document.createElement('button');
+            button.innerText = 'LOG OUT';
+            button.addEventListener('click', () => {
+                // Remove the loggedIn flag from localStorage
+                localStorage.removeItem("localEmail");
+                localStorage.removeItem("localPassword");
+                localStorage.removeItem("loggedIn");
+                // Show the login screen
+                showLoginScreen();
+            });
+            // Append the logout button to the account details section
+            document.getElementById("accountDetails").appendChild(button);
+        }
+        function showLoginScreen() {
+            document.getElementById("loginScreen").style.display = "block";
+            document.getElementById("signUpButton").style.display = "block";
+            document.getElementById("accountDetails").style.display = "none";
+        }
+        function signUpSwitch() {
+            window.location.href = "/sturdy-fiesta/signup";
+        }
+        function login_user() {
+            // You can make a POST request here to your authentication endpoint
+            var url = "https://ccplace.duckdns.org";
+            // Comment out next line for local testing
+            //  url = "https://no-papels.stu.nighthawkcodingsociety.com"; 
+            const login_url = url + '/authenticate';
+            const body = {
+                email: document.getElementById("uid").value,
+                password: document.getElementById("password").value,
+            };
+            console.log(JSON.stringify(body));
+            const requestOptions = {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'include',
+                body: JSON.stringify(body),
+                headers: {
+                    "content-type": "application/json",
+                    "Access-Control-Allow-Credentials": "true",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            };
+            // Fetch JWT
+            fetch(login_url, requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        const errorMsg = 'Login error: ' + response.status;
+                        console.log(errorMsg);
+                        return;
                     }
-                    if (data[i]["name"] === username && data[i]["password"]===password) {
-                        if (sessionStorage.getItem("uid") == null) {
-                            sessionStorage.setItem("uid", data[i]["name"]);
-                        }
-                        location.href = "/messagetest.html";
-                        break;
-                    }
-                    else {
-                        i += 1;
-                    }
-                }
-            })
-}
-</script>
+                    // Success!!!
+                    // Redirect to Database location
+                    localStorage.setItem("localEmail", document.getElementById("uid").value);
+                    localStorage.setItem("localPassword", document.getElementById("password").value);
+                    console.log(localStorage.getItem("localEmail"));
+                    console.log(localStorage.getItem("localPassword"));
+                    localStorage.setItem("loggedIn", "true");
+                    showAccountDetails();
+                    window.location.href = "/place/channels";
+                });
+        }
+    </script>
