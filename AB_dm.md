@@ -2,7 +2,6 @@
 layout: default
 title: Direct Messaging
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <style>
