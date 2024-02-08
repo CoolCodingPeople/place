@@ -96,11 +96,11 @@ function signup() {
                 }
                 // response contains valid result
                 response.json().then(data => {
-                    location.href = "/messagetest.html";
+                    location.href = "/place/messagetest.html";
                 })
-                location.href = "/messagetest.html";
+                location.href = "/place/messagetest.html";
             })
-            location.href = "/messagetest.html";
+            location.href = "/place/messagetest.html";
     } else {
         alert("password is not matched");
     }
