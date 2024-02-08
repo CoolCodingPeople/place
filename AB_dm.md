@@ -12,14 +12,14 @@ title: Direct Messaging
             box-sizing: border-box;
         }
         .chat-container {
-            max-width: 800px; /* Increased width */
+            max-width: 800px; 
             margin: 50px auto;
             border: 1px solid #ccc;
             border-radius: 10px;
             overflow: hidden;
         }
         .chat-window {
-            height: 400px; /* Increased height */
+            height: 400px; 
             overflow-y: scroll;
             padding: 10px;
         }
@@ -29,12 +29,12 @@ title: Direct Messaging
         }
         input {
             flex: 1;
-            padding: 10px; /* Increased padding */
+            padding: 10px; 
             border: 1px solid #ccc;
             border-radius: 5px;
         }
         button {
-            padding: 10px 20px; /* Increased padding */
+            padding: 10px 20px; 
             margin-left: 10px;
             cursor: pointer;
         }
