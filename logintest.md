@@ -31,7 +31,7 @@ permalink: /login
                 <p></p>
                 <p id="message"></p>
                 <button style="padding: 5px; color: black; flex: 50%" onclick="login()">Login</button>
-                <button style="padding: 5px; color: black; flex: 50%" onclick="location.href='https://coolcodingpeople.github.io/skatepark.co/signup'">Signup</button>
+                <button style="padding: 5px; color: black; flex: 50%" onclick="location.href='https://coolcodingpeople.github.io/place/signup'">Signup</button>
             `;
         }
         else {
