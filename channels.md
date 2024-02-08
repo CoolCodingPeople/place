@@ -36,6 +36,7 @@
             <form id="createChannelForm">
                 <label for="channelName">Channel Name:</label>
                 <input type="text" id="channelName" name="channelName" required>
+                <input type="text" id="channelDesc" name="channelDesc" required>
                 <button type="submit">Create Channel</button>
             </form>
         </div>
@@ -171,12 +172,20 @@ document.querySelector('.close').addEventListener('click', function() {
 document.getElementById('createChannelForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const channelName = document.getElementById('channelName').value;
+    const channelDesc = document.getElementById('channelDesc').value;
     if (channelName) {
         const li = document.createElement('li');
         li.textContent = channelName;
         document.getElementById('channelList').appendChild(li);
         document.getElementById('createChannelModal').style.display = 'none';
         document.getElementById('channelName').value = ''; // Reset input field
+    }
+    if (channelDesc) {
+        const li = document.createElement('li');
+        li.textContent = channelDesc;
+        document.getElementById('channelList').appendChild(li);
+        document.getElementById('createChannelModal').style.display = 'none';
+        document.getElementById('channelDesc').value = ''; // Reset input field
     }
 });
 
