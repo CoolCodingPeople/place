@@ -1,7 +1,7 @@
 ---
 layout: default
 title: login
-permalink: /login
+permalink: /logins
 ---
 
 <!-- <div class="page-header" style="padding: 350px height: 20%; border-radius: 50px;">
