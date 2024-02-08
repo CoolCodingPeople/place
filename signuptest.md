@@ -1,7 +1,7 @@
 ---
 layout: default
 title: sign up
-permalink: /signup
+permalink: /signups
 ---
 
 <h1> Sign Up Page</h1>
