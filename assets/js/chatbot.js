@@ -7,9 +7,9 @@ const waitingSpinner = getById("waiting");
 const url = "http://localhost:8765/aichatbot/chat?message=";
 
 // Icons made by Freepik from www.flaticon.com
-const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
-const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
-const BOT_NAME = "BOT";
+const BOT_IMG = "assets/icons/icons8-chat-bot-64.png";
+const PERSON_IMG = "assets/icons/icons8-person-94.png";
+const BOT_NAME = "Chat Bot";
 const PERSON_NAME = "Shivansh";
 
 msgerForm.addEventListener("submit", event => {
