@@ -94,18 +94,23 @@ permalink: /accountsignup
         <div id="loginScreen">
             <form action="javascript:signUpRequest()">
                 <p id="name" class="normal">
-                    <label>Name:
+                    <label>Username
                         <input class="normal" type="text" name="legalName" id="legalName" required>
                     </label>
                 </p>
                 <p id="email" class="normal">
-                    <label>Email:
+                    <label>Email
                         <input class="normal" type="text" name="uid" id="uid" required>
                     </label>
                 </p>
                 <p id="passwordd" class="normal">
-                    <label>Password:
+                    <label>Password
                         <input class="normal" type="password" name="password" id="password" required>
+                    </label>
+                </p>
+                <p id="dob" class="normal">
+                    <label>Birth Date (01-02-1234)
+                        <input class="normal" type="text" name="dofb" id="dofb" required>
                     </label>
                 </p>
                 <p id="logind" class="normal">
@@ -124,7 +129,7 @@ permalink: /accountsignup
 
 <script>
     function logInSwitch() {
-        window.location.href = "/Stocktify/login";
+        window.location.href = "/place/login";
     }
 
     function signUpUser() {
@@ -138,6 +143,7 @@ permalink: /accountsignup
                 name: document.getElementById("legalName").value,
                 email: document.getElementById("uid").value,
                 password: document.getElementById("password").value,
+                dob: document.getElementById("dob").value,
             };
 
             console.log(JSON.stringify(body));
@@ -180,8 +186,9 @@ permalink: /accountsignup
         let fetchName = document.getElementById("legalName").value
         let fetchEmail = document.getElementById("uid").value
         let fetchPassword = document.getElementById("password").value
+        let fetchDob = document.getElementById("dofb").value
 
-        fetch(`https://ccplace.duckdns.org/api/person/post?email=${fetchEmail}&password=${fetchPassword}@123&name=${fetchName}`, requestOptions)
+        fetch(`https://ccplace.duckdns.org/api/person/post?name=${fetchName}&email=${fetchEmail}&password=${fetchPassword}@123&dob=${fetchDob}`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 const errorMsg = 'Login error: ' + response.status;
