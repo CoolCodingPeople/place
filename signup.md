@@ -72,8 +72,8 @@ title: Sign-Up
 
     function signUpUser() {
         console.log("signUpUser() called");
-        var url = "https://ccplace.stu.nighthawkcodingsociety.com";
-
+    //  var url = "https://ccplace.stu.nighthawkcodingsociety.com";
+        var url = "http://localhost:8085";
             // Comment out next line for local testing
             // url = "http://localhost:8085";
             const login_url = url + '/api/person/post'; 
