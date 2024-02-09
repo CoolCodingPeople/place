@@ -72,7 +72,7 @@ title: Sign-Up
 
     function signUpUser() {
         console.log("signUpUser() called");
-        var url = "https://ccplace.duckdns.org";
+        var url = "https://ccplace.stu.nighthawkcodingsociety.com";
 
             // Comment out next line for local testing
             // url = "http://localhost:8085";
@@ -126,7 +126,7 @@ title: Sign-Up
         let fetchPassword = document.getElementById("password").value
         let fetchDob = document.getElementById("dofb").value
 
-        fetch(`https://ccplace.duckdns.org/api/person/post?name=${fetchName}&email=${fetchEmail}&password=${fetchPassword}@123&dob=${fetchDob}`, requestOptions)
+        fetch(`ccplace.stu.nighthawkcodingsociety.com/api/person/post?name=${fetchName}&email=${fetchEmail}&password=${fetchPassword}@123&dob=${fetchDob}`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 const errorMsg = 'Login error: ' + response.status;
