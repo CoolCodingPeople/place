@@ -1,21 +1,21 @@
 ---
-layout: default
-title: sign up
-permalink: /signups
+title: Account Sign Up
+layout: post
+permalink: /accountsignup
 ---
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Sign Up</title>
-<style>
+    <style>
         .normal {
-            background-color: #FFC0CB !important; /* changed to pink */
-            color: black !important; /* changed to black */
+            background-color: #121212 !important;
+            color: white !important;
         }
         .lightmode {
-            background-color: #ADD8E6 !important; /* changed to light blue */
-            color: white !important; /* changed to white */
+            background-color: #F6FFF5 !important;
+            color: black !important;
         }
         .post-title {
             text-align: center;
@@ -34,7 +34,7 @@ permalink: /signups
             justify-content: center;
         }
         .container {
-            background-color: white;
+            background-color: grey;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -42,8 +42,8 @@ permalink: /signups
             text-align: center;
         }
         .normal {
-            background-color: #FFC0CB; /* changed to pink */
-            color: black; /* changed to black */
+            background-color: #121212;
+            color: white;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -53,33 +53,23 @@ permalink: /signups
             width: 100%;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid black; /* changed to black */
+            border: 1px solid white;
         }
         .normal button {
-            background-color: #FFC0CB; /* changed to pink */
-            color: black; /* changed to black */
+            background-color: #121212;
+            color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             width: 50%;
         }
-                .button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #FF1493; /* changed to deep pink */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
         .normal button:hover {
-            background-color: #FF69B4; /* changed to hot pink */
+            background-color: #333;
         }
         .lightmode {
-            background-color: #ADD8E6; /* changed to light blue */
-            color: white; /* changed to white */
+            background-color: #F6FFF5;
+            color: black;
         }
         #logind {
             display: flex;
@@ -93,23 +83,8 @@ permalink: /signups
             width: 20%;
             margin: 10px 0px 0px;
             margin-left: 40%;
-            background-color: #00BFFF; /* changed to deep sky blue */
+            background-color: light blue;
         }
-            ::-webkit-scrollbar {
-        width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #333;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #FFC0CB; /* changed to pink */
-        border-radius: 4px;
-        width: 4px; 
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #FF1493; /* changed to deep pink */
-        width: 4px;
-    }
     </style>
 </head>
 
@@ -144,12 +119,12 @@ permalink: /signups
             <p>Welcome to your account. Your account details are displayed here.</p>
         </div>
     </div>
-    <button id="logInButton" class="button" onclick="logInSwitch()">Log In</button>
+    <button id="logInButton" onclick="logInSwitch()">Log In</button>
 </body>
 
 <script>
     function logInSwitch() {
-        window.location.href = "/sturdy-fiesta/login";
+        window.location.href = "/Stocktify/login";
     }
 
     function signUpUser() {
@@ -157,7 +132,7 @@ permalink: /signups
         var url = "https://ccplace.duckdns.org";
 
             // Comment out next line for local testing
-            url = "https://ccplace.duckdns.org";
+            // url = "http://localhost:8085";
             const login_url = url + '/api/person/post'; 
             const body = {
                 name: document.getElementById("legalName").value,
@@ -190,7 +165,7 @@ permalink: /signups
                     // Success!!!
                     // Redirect to Database location
                     console.log("success")
-                    window.location.href = "/sturdy-fiesta/login";
+                    window.location.href = "/place/accountlogin";
                 });
     }
 
@@ -216,7 +191,7 @@ permalink: /signups
             // Success!!!
             // Redirect to Database location
             console.log("success")
-            window.location.href = "/place/acclogin";
+            window.location.href = "/place/login";
         });
     }
 </script>
