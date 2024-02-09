@@ -138,8 +138,8 @@ title: channel test
                 .catch(error => console.log('Error:', error));
         }
 
-        // Periodically fetch messages every 5 seconds
-        setInterval(fetchMessages, 5000);
+        // Periodically fetch messages every 2 seconds
+        setInterval(fetchMessages, 2000);
 
         // Send a message
         const messageForm = document.getElementById('messageForm');

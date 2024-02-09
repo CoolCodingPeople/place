@@ -115,7 +115,7 @@ title: Log-In
             console.log(JSON.stringify(body));
             const requestOptions = {
                 method: 'POST',
-                mode: 'cors',
+                mode: 'no-cors',
                 cache: 'no-cache',
                 credentials: 'include',
                 body: JSON.stringify(body),
