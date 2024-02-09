@@ -17,7 +17,6 @@ title: channel test
             align-items: center;
             height: 100vh;
         }
-
         .container {
             background-color: #ffffff;
             border-radius: 10px;
@@ -26,7 +25,6 @@ title: channel test
             width: 80%;
             max-width: 500px;
         }
-
         .form-field {
             background-color: #f5f5f5;
             border: none;
@@ -35,7 +33,6 @@ title: channel test
             padding: 12px 20px;
             width: 100%;
         }
-
         .form-button {
             background-color: #6200ee;
             border: none;
@@ -46,39 +43,31 @@ title: channel test
             text-transform: uppercase;
             width: 100%;
         }
-
         .form-button:hover {
             background-color: #3700b3;
         }
-
         .message-container {
             margin-bottom: 20px;
         }
-
         .message {
             background-color: #f5f5f5;
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 10px;
         }
-
         .message .writer {
             font-weight: bold;
         }
-
         .message .time {
             font-size: 0.8em;
             color: #888888;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Messaging System</h1>
-
         <div id="messagesContainer"></div>
-
         <form id="messageForm">
             <select id="channelSelect"></select>
             <input class="form-field" type="text" name="messageText" id="messageText" placeholder="Type your message"
@@ -86,7 +75,6 @@ title: channel test
             <button class="form-button">Send</button>
         </form>
     </div>
-
     <script>
         // Fetch available channels
     //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/channel')
@@ -94,7 +82,6 @@ title: channel test
             .then(response => response.json())
             .then(data => {
                 const channelSelect = document.getElementById('channelSelect');
-
                 // Add options to the channel select dropdown
                 data.channels.forEach(channel => {
                     const option = document.createElement('option');
@@ -104,7 +91,6 @@ title: channel test
                 });
             })
             .catch(error => console.log('Error:', error));
-
         // Fetch and display messages
         function fetchMessages() {
         //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/message')
@@ -113,53 +99,42 @@ title: channel test
                 .then(data => {
                     const messagesContainer = document.getElementById('messagesContainer');
                     messagesContainer.innerHTML = '';
-
                     // Display each message
                     data.messages.forEach(message => {
                         const messageDiv = document.createElement('div');
                         messageDiv.classList.add('message');
-
                         const writerSpan = document.createElement('span');
                         writerSpan.classList.add('writer');
                         writerSpan.textContent = message.writer;
-
                         const timeSpan = document.createElement('span');
                         timeSpan.classList.add('time');
                         timeSpan.textContent = message.time;
-
                         const textParagraph = document.createElement('p');
                         textParagraph.textContent = message.text;
-
                         messageDiv.appendChild(writerSpan);
                         messageDiv.appendChild(timeSpan);
                         messageDiv.appendChild(textParagraph);
-
                         messagesContainer.appendChild(messageDiv);
                     });
                 })
                 .catch(error => console.log('Error:', error));
         }
-
         // Periodically fetch messages every 2 seconds
         setInterval(fetchMessages, 2000);
-
         // Send a message
         const messageForm = document.getElementById('messageForm');
         messageForm.addEventListener('submit', function (event) {
             event.preventDefault();
-
             const channelId = document.getElementById('channelSelect').value;
             const messageText = document.getElementById('messageText').value;
             const writer = localStorage.getItem('localUsername');
             const time = new Date().toLocaleTimeString();
-
             const message = {
                 text: messageText,
                 writer: writer,
                 time: time,
                 channelId: channelId
             };
-
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -167,7 +142,6 @@ title: channel test
                 },
                 body: JSON.stringify(message)
             };
-
         //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/message', requestOptions)
             fetch('http://localhost:8765/message', requestOptions)
                 .then(response => {

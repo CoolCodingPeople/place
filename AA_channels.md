@@ -42,7 +42,6 @@
     </div>
     <script src="script.js"></script>
 </body>
-</html>
 <style>
 body, html {
     margin: 0;
@@ -190,3 +189,4 @@ document.getElementById('channelList').addEventListener('click', function(e) {
     }
 });
 </script>
+</html>
