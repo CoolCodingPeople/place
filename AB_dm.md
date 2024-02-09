@@ -16,7 +16,7 @@ title: Direct Messaging
             margin: 50px auto;
             border: 1px solid #ccc;
             border-radius: 10px;
-            overflow: hidden;
+            overflow: hidden; 
         }
         .chat-window {
             height: 400px; 
