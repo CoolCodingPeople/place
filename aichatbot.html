@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>AI Chat Bot</title>
  <link rel="stylesheet" href="assets/css/chatbot.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  <meta charset="utf-8">
@@ -9,23 +10,30 @@
 <section class="msger">
   <header class="msger-header">
     <div class="msger-header-title">
-      <i class="fas fa-comment-alt"></i> SimpleChat
+      <i class="fa fa-comment" title="AI Chat Bot"></i> AI Chat Bot
     </div>
     <div id="waiting" class="msger-header-options" style="display:none">
-      <span>Waiting for response...<i class="fa fa-cog fa-spin"></i></span>
+      <span><i class="fa fa-cog fa-spin" title="Waiting for response..."></i></span>
     </div>
+    <div class="msger-header-options" >
+      <span id="retieve_chat_history" style="cursor: pointer;"><i class="fa fa-history" title="Retrieve Chat History..."></i></span>
+      <span style="width: 10px;display: inline-block;">&nbsp;</span>
+      <span id="delete_chat" style="cursor: pointer;"><i class="fa fa-trash" title="Delete Chat History..."></i></span>
+    </div>
+    
   </header>
 
   <main class="msger-chat">
     <div class="msg left-msg">
       <div
        class="msg-img"
-       style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
+       style="background-image: url(assets/icons/icons8-chat-bot-64.png); width: 64px;
+  height: 64px;" title="AI Bot"
       ></div>
 
       <div class="msg-bubble">
         <div class="msg-info">
-          <div class="msg-info-name">BOT</div>
+          <div class="msg-info-name">Chat Bot</div>
           <!-- <div class="msg-info-time">12:45</div> -->
         </div>
 

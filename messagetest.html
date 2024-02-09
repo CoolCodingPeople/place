@@ -1,0 +1,264 @@
+<html>
+<head>
+  <h1 class="messing-around">Chat</h1>
+  <style>
+    html {
+      overflow: hidden;
+    }
+    .chatbox {
+      width: 710px;
+      background-color: #597377;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 8px 8px 16px #171717, -8px -8px 16px #171717;
+      margin: auto;
+      display: flex;
+      flex-direction: column-reverse;
+      position: absolute;
+      top: 100px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .user {
+      color: #9BC53D;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .user-message {
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    .timestamp {
+      font-size: 0.8em;
+      color: #888;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+
+    input[type="text"] {
+      width: 95%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background-color: #f7f7f7;
+      box-shadow: inset 6px 6px 12px #d9d9d9, inset -6px -6px 12px #c7ced0;
+    }
+
+    button {
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #6084d7;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 6px 6px 12px #6084d7, -6px -6px 12px #6084d7;
+      width: 30%;
+    }
+
+    .username-box {
+      width: 300px;
+      background-color: #597377;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 8px 8px 16px #171717, -8px -8px 16px #171717;
+      position: absolute;
+      top: 793px;
+      left: 110%;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .username-input {
+      width: 94%;
+      padding: 8px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: inset 4px 4px 8px #597377, inset -4px -4px 8px #597377;
+    }
+
+    .submit-username {
+      padding: 8px;
+      background-color: #6084d7;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <div id="messages">
+    </div>
+    <div>
+      <input type="text" id="input-message" placeholder="Type your message..." />
+      <button id="send-button" onclick="sendMessage()" disabled>Send</button>
+    </div>
+  </div>
+
+  <div class="username-box">
+    <input type="text" id="username-input" placeholder="Enter your username...">
+    <input type="password" id="password-input" placeholder="Enter your password...">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script>
+    // Define a function to fetch new messages periodically
+    let loggedIn = false; // Track login status
+
+    function login() {
+      const login_url = "https://ccplace.duckdns.org/api/person/";
+      // const login_url = "localhost:8765/api/person/";
+      const password = document.getElementById("password-input").value;
+      const username = document.getElementById("username-input").value;
+      fetch(login_url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          const user = data.find(u => u.name === username && u.password === password);
+          if (user) {
+            sessionStorage.setItem("uid", user.name);
+            loggedIn = true;
+            document.getElementById("send-button").removeAttribute("disabled");
+            document.getElementById("login-box").style.display = "none";
+          } else {
+            alert("Username or password is incorrect");
+          }
+        })
+        .catch(error => {
+          console.error('Error logging in:', error);
+        });
+    }
+
+
+    function updateChat() {
+      getMessages();
+      setTimeout(updateChat, 2000); // Fetch messages every 2 seconds
+    }
+
+    function getMessages() {
+      fetch('https://ccplace.duckdns.org/message')
+      // fetch('localhost:8765/message')
+        .then(response => response.json())
+        .then(messages => {
+          // Reverse the order of messages so the newest is displayed at the top
+          messages.reverse();
+
+          const messagesContainer = document.getElementById('messages');
+          messagesContainer.innerHTML = ''; // Clear existing messages
+          messages.forEach(message => {
+            displayMessage(message.writer, message.time, message.text);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching messages:', error);
+        });
+    }
+
+    function sendMessage() {
+      var inputMessage = document.getElementById('input-message').value;
+      document.getElementById('input-message').value = '';
+      var username = document.getElementById('username-input').value;
+
+      // Get the current time
+      var currentTime = getCurrentTime();
+
+      const chatData = {
+        "writer": username,
+        "time": currentTime,
+        "text": inputMessage
+      };
+
+      try {
+        fetch('https://ccplace.duckdns.org/message', {
+        // fetch('localhost:8765/message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(chatData),
+        })
+          .then(response => response.json())
+          .then(result => {
+            if (result.success) {
+              // Display the sent message immediately
+              displayMessage(username, currentTime, inputMessage, channelId);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      getMessages();
+    }
+
+    function getCurrentTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    }
+
+    // Call the updateChat function to start periodic updates
+    updateChat();
+
+    function displayMessage(writer, title, content) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+    
+      const userElement = document.createElement('span');
+      userElement.classList.add('user');
+      userElement.textContent = writer + ': ';
+    
+      // Generate a random color for the user's name
+      const randomColor = getRandomColor();
+      userElement.style.color = randomColor;
+    
+      const userMessageElement = document.createElement('span');
+      userMessageElement.classList.add('user-message');
+      userMessageElement.textContent = content;
+    
+      const timestampElement = document.createElement('span');
+      timestampElement.classList.add('timestamp');
+      timestampElement.textContent = title;
+    
+      messageElement.appendChild(userElement);
+      messageElement.appendChild(userMessageElement);
+      messageElement.appendChild(timestampElement);
+    
+      const messagesContainer = document.getElementById('messages');
+      messagesContainer.appendChild(messageElement);
+    
+      // Scroll to the bottom to show the latest messages
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Function to generate a random color
+    function getRandomColor() {
+      const list = ["#FF5733", "#FFC300", "#5DBB63", "#6B66B5", "#4183D7"];
+      const randomIndex = Math.floor(Math.random() * list.length);
+      return list[randomIndex];
+    }
+    
+  </script>
+</body>
+</html>
