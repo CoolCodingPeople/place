@@ -28,7 +28,6 @@
             </form>
         </main>
     </div>
-
     <!-- Create Channel Modal -->
     <div id="createChannelModal" class="modal">
         <div class="modal-content">
@@ -41,7 +40,6 @@
             </form>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
@@ -51,35 +49,29 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
 }
-
 .app-container {
     display: flex;
     height: 100vh;
 }
-
 header {
     background-color: #7289da;
     color: white;
     padding: 10px;
     text-align: center;
 }
-
 .sidebar {
     background-color: #2c2f33;
     color: white;
     width: 240px;
     padding: 20px;
 }
-
 .sidebar h2, .content h2 {
     margin-top: 0;
 }
-
 .content {
     flex-grow: 1;
     padding: 20px;
 }
-
 .modal {
     display: none;
     position: fixed;
@@ -91,7 +83,6 @@ header {
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
-
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -100,32 +91,27 @@ header {
     width: 80%;
     max-width: 500px;
 }
-
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
-
 #channelList {
     list-style: none;
     padding: 0;
 }
-
 #channelList li {
     padding: 10px 0;
     border-bottom: 1px solid #444;
     cursor: pointer;
 }
-
 .messages {
     border: 1px solid #ccc;
     margin-bottom: 10px;
@@ -134,11 +120,9 @@ header {
     padding: 10px;
     background-color: #f9f9f9;
 }
-
 .message-form {
     display: flex;
 }
-
 #messageInput {
     flex-grow: 1;
     padding: 10px;
@@ -146,7 +130,6 @@ header {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
 #messageForm button {
     padding: 10px 20px;
     background-color: #7289da;
@@ -155,7 +138,6 @@ header {
     border-radius: 4px;
     cursor: pointer;
 }
-
 #messageForm button:hover {
     background-color: #5b6eae;
 }
@@ -164,11 +146,9 @@ header {
 document.getElementById('createChannelBtn').addEventListener('click', function() {
     document.getElementById('createChannelModal').style.display = 'block';
 });
-
 document.querySelector('.close').addEventListener('click', function() {
     document.getElementById('createChannelModal').style.display = 'none';
 });
-
 document.getElementById('createChannelForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const channelName = document.getElementById('channelName').value;
@@ -188,9 +168,7 @@ document.getElementById('createChannelForm').addEventListener('submit', function
         document.getElementById('channelDesc').value = ''; // Reset input field
     }
 });
-
 let selectedChannelName = '';
-
 document.getElementById('messageForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const messageInput = document.getElementById('messageInput');
@@ -204,7 +182,6 @@ document.getElementById('messageForm').addEventListener('submit', function(e) {
         alert('Please select a channel first.');
     }
 });
-
 document.getElementById('channelList').addEventListener('click', function(e) {
     if (e.target.tagName === 'LI') {
         selectedChannelName = e.target.textContent;
