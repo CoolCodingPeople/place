@@ -1,7 +1,7 @@
 ---
 layout: page
 search_exclude: true
-permalink: login
+permalink: logintest
 ---
 <html lang="en">
 
@@ -85,7 +85,8 @@ permalink: login
             var password = document.getElementById('login-password').value;
             // Perform login action (AJAX request to the server)
             try {
-                const response = await fetch('https://ccplace.stu.nighthawkcodingsociety.com/api/authenticate', {
+            //  const response = await fetch('https://ccplace.stu.nighthawkcodingsociety.com/api/authenticate', {
+                const response = await fetch('http://localhost:8765/api/authenticate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -112,6 +113,7 @@ permalink: login
             // Perform signup action (AJAX request to the server)
             try {
                 const response = await fetch('https://ccplace.stu.nighthawkcodingsociety.com/api/person/post', {
+            //  const response = await fetch('http://localhost:8765/api/person/post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -77,8 +77,8 @@ title: channel test
     </div>
     <script>
         // Fetch available channels
-        fetch('https://ccplace.stu.nighthawkcodingsociety.com/channel')
-    //  fetch('localhost:8765/channel')
+    //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/channel')
+        fetch('http://localhost:8765/channel')
             .then(response => response.json())
             .then(data => {
                 const channelSelect = document.getElementById('channelSelect');
@@ -93,7 +93,8 @@ title: channel test
             .catch(error => console.log('Error:', error));
         // Fetch and display messages
         function fetchMessages() {
-            fetch('https://ccplace.stu.nighthawkcodingsociety.com/message')
+        //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/message')
+            fetch('http://localhost:8765/channel')
                 .then(response => response.json())
                 .then(data => {
                     const messagesContainer = document.getElementById('messagesContainer');
@@ -141,7 +142,8 @@ title: channel test
                 },
                 body: JSON.stringify(message)
             };
-            fetch('https://ccplace.stu.nighthawkcodingsociety.com/message', requestOptions)
+        //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/message', requestOptions)
+            fetch('http://localhost:8765/message', requestOptions)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error sending message');

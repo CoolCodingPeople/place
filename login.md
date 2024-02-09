@@ -104,7 +104,8 @@ title: Log-In
         }
         function login_user() {
             // You can make a POST request here to your authentication endpoint
-            var url = "https://ccplace.stu.nighthawkcodingsociety.com";
+        //  var url = "https://ccplace.stu.nighthawkcodingsociety.com";
+            var url = "http://localhost:8765";
             // Comment out next line for local testing
             // url = "http://localhost:8085";
             const login_url = url + '/authenticate';
@@ -141,7 +142,7 @@ title: Log-In
                     console.log(localStorage.getItem("localPassword"));
                     localStorage.setItem("loggedIn", "true");
                     showAccountDetails();
-                    window.location.href = "/place/channels";
+                    window.location.href = "/place/channel";
                 });
         }
     </script>
