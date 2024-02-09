@@ -2,15 +2,47 @@ const msgerForm = get(".msger-inputarea");
 const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
 const waitingSpinner = getById("waiting");
+const deleteChat = getById("delete_chat");
+const retieveChatHistory = getById("retieve_chat_history");
 
 //const url = "http://192.168.68.99:11434/api/generate";
-const url = "http://localhost:8765/aichatbot/chat?message=";
+const chatUrl = "http://localhost:8765/aichatbot/chat?message=";
+const clearHistUrl = "http://localhost:8765/aichatbot/chat/history/clear";
+const retrieveHistUrl = "http://localhost:8765/aichatbot/chat/history";
 
-// Icons made by Freepik from www.flaticon.com
 const BOT_IMG = "assets/icons/icons8-chat-bot-64.png";
 const PERSON_IMG = "assets/icons/icons8-person-94.png";
 const BOT_NAME = "Chat Bot";
 const PERSON_NAME = "Shivansh";
+
+const BOT_TITLE = "AI Bot";
+const PERSON_TITLE = "Shivansh";
+
+deleteChat.addEventListener("click", async (event) => {
+	event.preventDefault();
+	await deleteData(clearHistUrl);
+	msgerChat.innerHTML = "";
+	appendMessage(BOT_NAME, BOT_IMG, "left", "Your chat history has been cleared! Go ahead and send me a new message. 😄", BOT_TITLE);
+});
+
+
+retieveChatHistory.addEventListener("click", async (event) => {
+	event.preventDefault();
+	const chatHistory = await getData(retrieveHistUrl);
+	console.log(chatHistory);
+	const chatJson =JSON.parse(chatHistory);
+	
+	const chats = chatJson.chats;
+	console.log(chats);
+	for (var i = 0; i < chats.length; i++) {
+			const chatJsonTemp =chats[i];
+			const cResponse = chatJsonTemp.chat_response;
+			const cMessage = chatJsonTemp.chat_message;
+			appendMessage(PERSON_NAME, PERSON_IMG, "right", cMessage, PERSON_TITLE);
+			appendMessage(BOT_NAME, BOT_IMG, "left", cResponse, BOT_TITLE);
+		}
+	
+});
 
 msgerForm.addEventListener("submit", event => {
   event.preventDefault();
@@ -18,18 +50,18 @@ msgerForm.addEventListener("submit", event => {
   const msgText = msgerInput.value;
   if (!msgText) return;
 
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText, PERSON_TITLE);
   msgerInput.value = "";
   
 waitingSpinner.style.display="";
   botResponse(msgText);
 });
 
-function appendMessage(name, img, side, text) {
+function appendMessage(name, img, side, text, title) {
   //   Simple solution for small apps
   const msgHTML = `
     <div class="msg ${side}-msg">
-      <div class="msg-img" style="background-image: url(${img})"></div>
+      <div class="msg-img" style="background-image: url(${img}) " title="${title}"></div>
 
       <div class="msg-bubble">
         <div class="msg-info">
@@ -47,7 +79,7 @@ function appendMessage(name, img, side, text) {
 }
 
 function botResponse(msgText) {
-	let reqUrl = url + msgText;
+	let reqUrl = chatUrl + msgText;
 	//postData(url, {  "model": "llama2",  prompt}).then((data) => {
 	getData(reqUrl).then((data) => {	
 		console.log(data);
@@ -68,7 +100,7 @@ function botResponse(msgText) {
 		
 		console.log(chatReponse);
 		*/
-		appendMessage(BOT_NAME, BOT_IMG, "left", data);
+		appendMessage(BOT_NAME, BOT_IMG, "left", data, BOT_TITLE);
 		waitingSpinner.style.display="none";
 	});
   
@@ -122,8 +154,33 @@ async function postData(url = "", data = {}) {
 
 async function getData(url = "") {
   // Default options are marked with *
+  
   const response = await fetch(url, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  }).then(function(response) {
+    // The response is a Response instance.
+    // You parse the data into a useable format using `.json()`
+    return response.text();
+  }).then(function(data) {
+    // `data` is the parsed version of the JSON returned from the above endpoint.
+    return data ;
+  });
+  return response; // parses JSON response into native JavaScript objects
+}
+
+async function deleteData(url = "") {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit
