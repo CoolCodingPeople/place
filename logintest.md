@@ -1,6 +1,6 @@
 ---
 title: Account Login
-layout: Default
+layout: post
 permalink: /accountlogin
 ---
 

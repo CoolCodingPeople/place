@@ -1,7 +1,7 @@
 ---
 title: Account Sign Up
-layout: Default
-permaling: /accountsignup
+layout: post
+permalink: /accountsignup
 ---
 
 <head>
