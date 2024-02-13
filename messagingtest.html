@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+    <style>
+        #messages {
+          height: 83vh;
+          overflow-y: auto;
+          border-radius: 10px;
+          border: 3px solid #ccc;
+          padding: 10px;
+          margin-bottom: 10px;
+          width: 98.2%;
+          font-family: Arial, sans-serif;
+        }
+      
+        #settings {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          cursor: pointer;
+        }
+      
+        #messageInput {
+          position: center;
+          height: 30px;
+          width: 90%;
+          border-radius: 10px;
+          border: 3px solid #ccc;
+          padding: 5px;
+          font-family: Arial, sans-serif;
+        }
+      
+        #sendButton {
+          left: 1px;
+          height: 41px;
+          width: 8.5%;
+          border-radius: 10px;
+          border: 3px solid #ccc;
+          background-color: #f0f0f0;
+          font-family: Arial, sans-serif;
+          cursor: pointer;
+        }
+      
+        #channelSelect {
+          border-radius: 10px;
+          border: 3px solid #ccc;
+          padding: 5px;
+          font-family: Arial, sans-serif;
+          width: 10%;
+        }
+      
+        /* Dark mode styles */
+        body.dark-mode {
+          background-color: #333;
+          color: #fff;
+        }
+      
+        body.dark-mode #messageInput,
+        body.dark-mode #sendButton,
+        body.dark-mode #channelSelect {
+          background-color: #444;
+          border-color: #888;
+          color: #fff;
+        }
+      
+        body.dark-mode #sendButton {
+          background-color: #888;
+        }
+      </style>
+      
+      </head>
+      
+      <body>
+        <div id="settings">⚙️</div>
+        <select id="channelSelect">
+          <!-- Populate with your channels -->
+        </select>
+        <div id="messages">
+          <!-- Messages will be displayed here -->
+        </div>
+        <input type="text" id="messageInput" placeholder="Type your message here...">
+        <button id="sendButton">Send</button>
+      
+        <script>
+fetch('http://localhost:8765/channel')
+.then(response => response.json())
+.then(data => {
+    const channelSelect = document.getElementById('channelSelect');
+    data.forEach(channel => {
+        const option = document.createElement('option');
+        option.value = channel.id;
+        option.textContent = channel.name;
+        channelSelect.appendChild(option);
+    });
+})
+.catch(error => {
+    console.error('Error fetching channels:', error);
+});
+
+document.getElementById('settings').addEventListener('click', function() {
+    var bgColor = prompt("Enter a background color:");
+    var msgColor = prompt("Enter a message color:");
+    var darkMode = confirm("Enable dark mode?");
+    
+    if (bgColor) {
+        document.body.style.backgroundColor = bgColor;
+        localStorage.setItem('bgColor', bgColor);
+    }
+    
+    if (msgColor) {
+        document.getElementById('messages').style.color = msgColor;
+        localStorage.setItem('msgColor', msgColor);
+    }
+    
+    if (darkMode) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', true);
+    } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.removeItem('darkMode');
+    }
+});    
+
+    window.onload = function() {
+        var savedBgColor = localStorage.getItem('bgColor');
+        var savedMsgColor = localStorage.getItem('msgColor');
+        var isDarkMode = localStorage.getItem('darkMode');
+
+        if (savedBgColor) {
+            document.body.style.backgroundColor = savedBgColor;
+        }
+
+        if (savedMsgColor) {
+            document.getElementById('messages').style.color = savedMsgColor;
+        }
+
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+};
+    </script>
+</body>
+</html>
+
+<!-- document.getElementById('channelSelect').addEventListener('change', function() {
+    const channelId = this.value;
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.innerHTML = '';
+
+    fetch(`http://localhost:8765/message?channelId=${channelId}`)
+    .then(response => response.json())
+    .then(messages => {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML = '';
+        messages.forEach(message => {
+            const messageElement = document.createElement('p');
+            messageElement.textContent = `${message.time} - ${message.writer}: ${message.text}`;
+            messagesDiv.appendChild(messageElement);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching messages:', error);
+    });
+});
+-->
