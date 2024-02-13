@@ -1,0 +1,159 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Channel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="content">
+    <div id="app">
+        <h1>Create a New Channel</h1>
+        <form id="createChannelForm">
+            <div class="form-group">
+                <label for="channelName">Channel Name:</label>
+                <input type="text" id="channelName" required>
+            </div>
+            <div class="form-group">
+                <label for="channelDesc">Description:</label>
+                <textarea id="channelDesc" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="channelCreator">Creator:</label>
+                <textarea id="channelCreator" required></textarea>
+            </div>
+            <div id="sidebar">
+                <a href="cc-home.html">Home</a>
+                <a href="cc-message.html">Message</a>
+                <a href="cc-assistant.html">Assistant</a>
+                <a href="cc-channel.html">Channel</a>
+                <a href="cc-account.html">Account</a>
+                <a href="cc-image.html">Image</a>
+            </div>
+            <button type="submit">Create Channel</button>
+        </form>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+    #sidebar {
+        height: 100vh;
+        width: 7%;
+        background-color: #f0f0f0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+        font-family: Arial, sans-serif;
+      }
+    
+      #sidebar a {
+          text-decoration: none;
+          color: #333;
+          margin-bottom: 10px;
+          padding: 10px;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+          font-family: Arial, sans-serif;
+      }
+    
+      #sidebar a:hover {
+          background-color: #ccc;
+      }
+
+      #content {
+        margin-left: 7.5%;
+        padding: 10px;
+    }
+
+body, html {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const createChannelForm = document.getElementById('createChannelForm');
+    
+        createChannelForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+    
+            // Retrieve creator from localStorage
+            let creator = localStorage.getItem('writer');
+    
+            // If no creator is set in localStorage, you might want to set one or handle this case differently
+            if (!creator) {
+                creator = prompt('Please enter the channel creator:');
+                localStorage.setItem('writer', creator);
+            }
+    
+            const name = document.getElementById('channelName').value;
+            const desc = document.getElementById('channelDesc').value;
+    
+            if (name && desc) {
+                fetch('http://localhost:8765/channel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        desc: desc,
+                        creator: creator,
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Clear the form fields
+                        document.getElementById('channelName').value = '';
+                        document.getElementById('channelDesc').value = '';
+                        alert('Channel created successfully!');
+                    } else {
+                        console.error('Error creating channel:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error creating channel:', error);
+                });
+            }
+        });
+    });
+    </script>

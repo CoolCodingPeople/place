@@ -1,5 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+
+    #sidebar {
+      height: 100vh;
+      width: 7%;
+      background-color: #f0f0f0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+  
+    #sidebar a {
+        text-decoration: none;
+        color: #333;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        font-family: Arial, sans-serif;
+    }
+  
+    #sidebar a:hover {
+        background-color: #ccc;
+    }
+
+    #content {
+      margin-left: 7.5%;
+      padding: 10px;
+  }
+</style>
 <head>
 <title>AI Chat Bot</title>
  <link rel="stylesheet" href="assets/css/chatbot.css">
@@ -20,6 +55,14 @@
       <span style="width: 10px;display: inline-block;">&nbsp;</span>
       <span id="delete_chat" style="cursor: pointer;"><i class="fa fa-trash" title="Delete Chat History..."></i></span>
     </div>
+    <div id="sidebar">
+      <a href="cc-home.html">Home</a>
+      <a href="cc-message.html">Message</a>
+      <a href="cc-assistant.html">Assistant</a>
+      <a href="cc-channel.html">Channel</a>
+      <a href="cc-account.html">Account</a>
+      <a href="cc-image.html">Image</a>
+  </div>
     
   </header>
 
