@@ -1,0 +1,114 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLACE Channel Creator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <form id="channelForm">
+            <input type="text" id="channelName" placeholder="Enter channel name" required>
+            <button type="submit">Create Channel</button>
+        </form>
+        <div id="channelsList">
+            <h2>Featured PLACE Channels</h2>
+            <ul id="channels"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+body, html {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+#channelForm {
+    margin-bottom: 20px;
+}
+
+#channelName {
+    margin-right: 10px;
+    padding: 8px;
+}
+
+button {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+#channelsList {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#channels li {
+    list-style: none;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const channelForm = document.getElementById('channelForm');
+    const channelNameInput = document.getElementById('channelName');
+    const channelsList = document.getElementById('channels');
+
+    // Function to fetch channels from the API
+    const fetchChannels = async () => {
+        try {
+            const response = await fetch('http://localhost:8765/channel');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const channels = await response.json();
+            renderChannels(channels);
+        } catch (error) {
+            console.error('Failed to fetch channels:', error);
+        }
+    };
+
+    // Function to render channels to the DOM
+    const renderChannels = (channels) => {
+        channelsList.innerHTML = '';
+        channels.forEach(channel => {
+            const li = document.createElement('li');
+            li.textContent = channel.name;
+            channelsList.appendChild(li);
+        });
+    };
+
+    // Handle form submission
+    channelForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const channelName = channelNameInput.value.trim();
+        if (channelName) {
+            try {
+                const response = await fetch('http://localhost:8765/channel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: channelName }),
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Fetch channels again to update the list
+                await fetchChannels();
+                channelNameInput.value = ''; // Reset input field
+            } catch (error) {
+                console.error('Failed to create channel:', error);
+            }
+        }
+    });
+
+    // Initial fetch of channels
+    fetchChannels();
+});
+</script>
