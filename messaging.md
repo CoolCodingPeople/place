@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: channel test
 ---
 <head>
@@ -47,6 +47,7 @@ title: channel test
         }
         .message-container {
             margin-bottom: 20px;
+            margin-top: 20px;
         }
         .message {
             background-color: #f5f5f5;
@@ -65,13 +66,24 @@ title: channel test
 </head>
 <body>
     <div class="container">
-        <h1>Messaging System</h1>
+        <h2>Send a message</h2>
         <div id="messagesContainer"></div>
         <form id="messageForm">
             <select id="channelSelect"></select>
             <input class="form-field" type="text" name="messageText" id="messageText" placeholder="Type your message"
                 required>
-            <button class="form-button">Send</button>
+            <button class="form-button">~ Send ~</button>
+        </form>
+    </div>
+    <div class="container">
+        <h2>Create a channel</h2>
+        <form id="channelForm">
+        <div id="messagesContainer"></div>
+            <input class="form-field" type="text" name="channelName" id="channelName" placeholder="Name your channel"
+                required>
+            <input class="form-field" type="text" name="channelName" id="channelName" placeholder="Add a description"
+                required>
+            <button class="form-button">~ Create ~</button>
         </form>
     </div>
     <script>
@@ -93,7 +105,7 @@ title: channel test
         // Fetch and display messages
         function fetchMessages() {
         //  fetch('https://ccplace.stu.nighthawkcodingsociety.com/message')
-            fetch('http://localhost:8765/channel')
+            fetch('http://localhost:8765/message')
                 .then(response => response.json())
                 .then(data => {
                     const messagesContainer = document.getElementById('messagesContainer');
@@ -130,9 +142,9 @@ title: channel test
             const time = new Date().toLocaleTimeString();
             const message = {
                 text: messageText,
-                writer: writer,
+                writer: "Landoooc",
                 time: time,
-                channelId: channelId
+                channelId: "1"
             };
             const requestOptions = {
                 method: 'POST',
@@ -154,4 +166,3 @@ title: channel test
         });
     </script>
 </body>
-</html>

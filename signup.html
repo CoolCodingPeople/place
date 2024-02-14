@@ -72,7 +72,7 @@ title: Sign-Up
     function signUpUser() {
         console.log("signUpUser() called");
     //  var url = "https://ccplace.stu.nighthawkcodingsociety.com";
-        var url = "http://localhost:8085";
+        var url = "http://localhost:8765";
             // Comment out next line for local testing
             // url = "http://localhost:8085";
             const login_url = url + '/api/person/post'; 
@@ -94,7 +94,8 @@ title: Sign-Up
             let fetchEmail = document.getElementById("uid").value
             let fetchPassword = document.getElementById("password").value
             let fetchDob = document.getElementById("dofb").value
-            fetch('https://ccplace.stu.nighthawkcodingsociety.com/api/person/post', {
+            // fetch('https://ccplace.stu.nighthawkcodingsociety.com/api/person/post', {
+            fetch('http://localhost:8765/api/person/post', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

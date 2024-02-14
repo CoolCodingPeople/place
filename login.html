@@ -103,6 +103,18 @@ title: Log-In
             window.location.href = "/place/accountsignup";
         }
         function login_user() {
+            var email = document.getElementById('username');
+            var password = document.getElementById('password').value;
+            var data = {email:email, password:password};
+            fetch("http://localhost:8765/authenticate", {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}).then((data) => {
+                if (data.status == 200) {
+                    window.location.replace("/mvc/person/read");
+                } else {
+                    document.getElementById('message').innerHTML = "Invalid email or password"
+                }
+            });
+        }
+        function login() {
             // You can make a POST request here to your authentication endpoint
         //  var url = "https://ccplace.stu.nighthawkcodingsociety.com";
             var url = "http://localhost:8765";
@@ -127,7 +139,7 @@ title: Log-In
                 },
             };
             // Fetch JWT
-            fetch(login_url, requestOptions)
+            fetch(login, requestOptions)
                 .then(response => {
                     if (!response.ok) {
                         const errorMsg = 'Login error: ' + response.status;
