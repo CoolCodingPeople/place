@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account</title>
+    <title>Login</title>
     <style>
         #sidebar {
             height: 100vh;
@@ -30,7 +30,24 @@
         #sidebar a:hover {
             background-color: #ccc;
         }
+        #login-container {
+            margin-left: 8%;
+            padding: 20px;
+        }
     </style>
+    <script>
+        function loginUser() {
+            var username = document.getElementById("username").value;
+            
+            if (username.trim() !== "") {
+                // You can redirect the user to the desired page here.
+                alert("Login successful! Redirecting to home page...");
+                window.location.href = "cc-home.html";
+            } else {
+                alert("Please enter a valid username.");
+            }
+        }
+    </script>
 </head>
 <body>
 <div id="sidebar">
@@ -41,9 +58,10 @@
     <a href="cc-account.html">Account</a>
     <a href="cc-image.html">Image</a>
 </div>
-<div>
+<div id="login-container">
+    <label for="username">Username:</label>
     <input type="text" id="username">
-    <button id="user_accept">Enter</button>
+    <button onclick="loginUser()">Enter</button>
 </div>
 </body>
 </html>
