@@ -17,7 +17,7 @@ search_exclude: true
     <div class="nav-links">
         <a href="#login">Log in/Sign Up</a>
         <a href="/channels">Channels</a>
-        <a href="cc-assistant.html">Chatbot</a>
+        <a href="aichatbot.html">Chatbot</a>
         <a href="#about">About Us</a>
     </div>
 </nav>
